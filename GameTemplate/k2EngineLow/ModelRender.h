@@ -19,6 +19,11 @@ namespace nsK2EngineLow
 			AnimationClip* animationClips = nullptr,
 			int numAnimationClips = 0,
 			EnModelUpAxis enModelUpAxis = enModelUpAxisZ);
+		
+		/// <summary>
+		/// スカイキューブを初期化
+		/// </summary>
+		void InitSkyCube(ModelInitData& initData);
 
 		/// <summary>
 		/// 更新処理 

@@ -13,6 +13,12 @@ namespace nsK2EngineLow
 		InitModel(filePath, enModelUpAxis);
 	}
 
+	void ModelRender::InitSkyCube(ModelInitData& initData)
+	{
+		//initData.m_colorBufferFormat[0] = DXGI_FORMAT_R16G16B16A16_FLOAT;
+		m_model.Init(initData);
+	}
+
 	void ModelRender::InitSkeleton(const char* filePath)
 	{
 		//スケルトンのデータを読み込み
