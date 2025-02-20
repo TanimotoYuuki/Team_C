@@ -1,10 +1,12 @@
 #pragma once
 
+#include "IRenderer.h"
+
 namespace nsK2EngineLow{
 	/// <summary>
 	/// フォントレンダー
 	/// </summary>
-	class FontRender
+	class FontRender : public IRenderer
 	{
 	public:
 		static const int MAX_TEXT_SIZE = 256;
@@ -125,12 +127,30 @@ namespace nsK2EngineLow{
 		/// <param name="rc">レンダーコンテキスト</param>
 		void Draw(RenderContext& rc);
 
+
+		/// <summary>
+		/// 影のパラメータを設定。
+		/// </summary>
+		/// <param name="isDrawShadow">影を描画するかどうか。</param>
+		/// <param name="shadowOffset">ピクセルのオフセット量。</param>
+		/// <param name="shadowColor">影の色。</param>
 		void SetShadowParam(bool isDrawShadow, float shadowOffset, const Vector4& shadowColor)
 		{
 			m_font.SetShadowParam(isDrawShadow, shadowOffset, shadowColor);
 		}
 
 	private:
+		/// <summary>
+		/// 2D描画パスから呼ばれる処理。
+		/// </summary>
+		/// <param name="rc"></param>
+		void OnRender2D(RenderContext& rc) override
+		{
+			m_font.Begin(rc);
+			m_font.Draw(m_text, Vector2(m_position.x, m_position.y), m_color, m_rotation, m_scale, m_pivot);
+			m_font.End(rc);
+		}
+
 		Vector3		m_position = Vector3::Zero; //座標
 		float		m_scale = 1.0f; //文字の大きさ
 		Vector4		m_color = g_vec4White; //文字の色　デフォルトで白

@@ -1,11 +1,15 @@
 #pragma once
 
+#include "MyRenderer.h"
+#include "geometry/AABB.h"
+#include "GeometryData.h"
+
 namespace nsK2EngineLow
 {
 	/// <summary>
 	/// スキンモデルレンダー
 	/// </summary>
-	class ModelRender
+	class ModelRender : public IRenderer
 	{
 	public:
 		/// <summary>
@@ -102,6 +106,32 @@ namespace nsK2EngineLow
 		{
 			m_scale = scale;
 		}
+
+		/// <summary>
+		/// アニメーションイベントの追加。
+		/// </summary>
+		/// <param name="eventListener"></param>
+		void AddAnimationEvent(AnimationEventListener eventListener)
+		{
+			m_animation.AddAnimationEventListener(eventListener);
+		}
+
+		/// <summary>
+		/// アニメーションの速度を設定。
+		/// </summary>
+		/// <param name="animationSpeed"></param>
+		void SetAnimationSpeed(const float animationSpeed)
+		{
+			m_animationSpeed = animationSpeed;
+		}
+
+		/// <summary>
+		/// ワールド行列を取得 
+		/// </summary>
+		const Matrix& GetWorldMatrix(int instanceId) const
+		{
+			return m_zprepassModel.GetWorldMatrix();
+		}
 	private:
 		/// <summary>
 		/// モデルの初期化
@@ -124,6 +154,28 @@ namespace nsK2EngineLow
 			int numAnimationClips,
 			EnModelUpAxis enModelUpAxis
 		);
+		/// <summary>
+		/// モデルの更新処理
+		/// </summary>
+		void UpdateWorldMatrixInModes();
+		/// <summary>
+		/// ZPrepass用モデルの初期化。
+		/// </summary>
+		/// <param name="filePath">ファイルパス。</param>
+		/// <param name="enModelUpAxis">モデルの上方向。</param>
+		void InitZPrepassModel(
+			const char* tkmFilePath,
+			EnModelUpAxis modelUpAxis
+		);
+		/// <summary>
+		/// ZPrepassの描画処理。
+		/// </summary>
+		void OnZPrepass(RenderContext& rc) override;
+		/// <summary>
+		/// フォワードレンダリングの描画処理。
+		/// </summary>
+		void OnForwardRender(RenderContext& rc) override;
+
 
 	private:
 		AnimationClip* m_animationClips = nullptr; //アニメーションクリップ
@@ -134,8 +186,10 @@ namespace nsK2EngineLow
 		EnModelUpAxis		m_enFbxUpAxis = enModelUpAxisZ; //FBXの上方向
 		Animation		m_animation; //アニメーション
 		Model		m_model; //スキンモデル
+		Model		m_zprepassModel; //Zprepassモデル
 		bool		m_isUpdateAnimation = true; // アニメーションを更新する？
 		Skeleton		m_skeleton; //骨
+		float		m_animationSpeed = 1.0f; //アニメーション速度
 	};
 }
 

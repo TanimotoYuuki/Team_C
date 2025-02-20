@@ -1,8 +1,9 @@
 #include "k2EngineLowPreCompile.h"
 #include "SpriteRender.h"
+#include "RenderingEngine.h"
 
 namespace nsK2EngineLow{
-	void SpriteRender::Init(const char* filePath, const float w, const float h)
+	void SpriteRender::Init(const char* filePath, const float w, const float h, AlphaBlendMode alphaBlendMode)
 	{
 		SpriteInitData initData;
 		//DDSファイル(画像データ)のファイルパスを指定する
@@ -12,6 +13,7 @@ namespace nsK2EngineLow{
 		//スプライトの幅と高さを指定する
 		initData.m_width = static_cast<UINT>(w);
 		initData.m_height = static_cast<UINT>(h);
+		initData.m_alphaBlendMode = alphaBlendMode;
 
 		//Sprite初期化オブジェクトを使用して、Spriteを初期化する
 		m_sprite.Init(initData);
@@ -19,6 +21,7 @@ namespace nsK2EngineLow{
 
 	void SpriteRender::Draw(RenderContext& rc)
 	{
-		m_sprite.Draw(rc);
+		g_renderingEngine->AddRenderObject(this);
+		//m_sprite.Draw(rc);
 	}
 }

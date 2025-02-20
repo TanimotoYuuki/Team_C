@@ -4,7 +4,7 @@ namespace nsK2EngineLow{
 	/// <summary>
 	/// スプライトレンダー
 	/// </summary>
-	class SpriteRender
+	class SpriteRender : public IRenderer
 	{
 	public:
 		/// <summary>
@@ -13,7 +13,8 @@ namespace nsK2EngineLow{
 		/// <param name="filePath">ファイルパス</param>
 		/// <param name="w">画像の横幅</param>
 		/// <param name="h">画像の縦幅</param>
-		void Init(const char* filePath, const float w, const float h);
+		/// 		/// <param name="alphaBlendMode">デフォルトは半透明合成。</param>
+		void Init(const char* filePath, const float w, const float h, AlphaBlendMode alphaBlendMode = AlphaBlendMode_Trans);
 
 		/// <summary>
 		/// 座標を設定　zは0.0fで
@@ -130,6 +131,15 @@ namespace nsK2EngineLow{
 		void Draw(RenderContext& rc);
 
 	private:
+		/// <summary>
+		/// 2D描画パスから呼ばれる処理。
+		/// </summary>
+		/// <param name="rc"></param>
+		void OnRender2D(RenderContext& rc) override
+		{
+			m_sprite.Draw(rc);
+		}
+
 		Sprite		m_sprite; //スプライト
 		Vector3		m_position = Vector3::Zero; //座標
 		Quaternion		m_rotation = Quaternion::Identity; //回転

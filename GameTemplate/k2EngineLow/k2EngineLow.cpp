@@ -5,12 +5,14 @@
 namespace nsK2EngineLow {
 	K2EngineLow* g_engine = nullptr;
 	GameTime* g_gameTime = nullptr;
+	RenderingEngine* g_renderingEngine = nullptr;
 
 	K2EngineLow::~K2EngineLow()
 	{
 		// グローバルなアクセスポイントにnullptrを代入。
 		g_graphicsEngine = nullptr;
 		g_gameTime = nullptr;
+		g_renderingEngine = nullptr;
 		
 		delete m_graphicsEngine;
 		
@@ -41,6 +43,10 @@ namespace nsK2EngineLow {
 			//エフェクトエンジンの初期化。
 			EffectEngine::CreateInstance();
 		}
+
+		g_renderingEngine = new RenderingEngine;
+		g_renderingEngine->Init();
+
 #ifdef K2_DEBUG
 		if (m_graphicsEngine) {
 			m_fpsFont = std::make_unique<Font>();
@@ -97,7 +103,8 @@ namespace nsK2EngineLow {
 		auto& renderContext = g_graphicsEngine->GetRenderContext();
 		// ゲームオブジェクトマネージャーの描画処理を実行。
 		GameObjectManager::GetInstance()->ExecuteRender(renderContext);
-		
+		g_renderingEngine->Update();
+		g_renderingEngine->Execute(renderContext);
 	}
 
 	/// <summary>

@@ -229,6 +229,10 @@
     <ClCompile Include="ModelRender.cpp" />
     <ClCompile Include="SpriteRender.cpp" />
     <ClCompile Include="SkyCube.cpp" />
+    <ClCompile Include="RenderingEngine.cpp" />
+    <ClCompile Include="IRenderer.cpp" />
+    <ClCompile Include="GeometryData.cpp" />
+    <ClCompile Include="SceneGeometryData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="k2EngineLowPreCompile.h" />
@@ -507,6 +511,11 @@
     <ClInclude Include="ModelRender.h" />
     <ClInclude Include="SpriteRender.h" />
     <ClInclude Include="SkyCube.h" />
+    <ClInclude Include="RenderingEngine.h" />
+    <ClInclude Include="MyRenderer.h" />
+    <ClInclude Include="IRenderer.h" />
+    <ClInclude Include="GeometryData.h" />
+    <ClInclude Include="SceneGeometryData.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="graphics">
