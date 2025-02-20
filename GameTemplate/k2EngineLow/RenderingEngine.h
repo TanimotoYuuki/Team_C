@@ -8,11 +8,6 @@ namespace nsK2EngineLow
 	class RenderingEngine : public Noncopyable
 	{
 	public:
-		enum class EnMainRTSnapshot
-		{
-			enDrawnOpacity,     // 不透明オブジェクトの描画完了時点
-			enNum,              // スナップショットの数
-		};
 
 		RenderingEngine();
 		~RenderingEngine();
@@ -30,21 +25,6 @@ namespace nsK2EngineLow
 			return m_zprepassRenderTarget.GetRenderTargetTexture();
 		}
 
-		Texture& GetGBufferAlbedoTexture()
-		{
-			return m_gBuffer[enGBufferAlbedoDepth].GetRenderTargetTexture();
-		}
-
-		Texture& GetGBufferNormalTexture()
-		{
-			return m_gBuffer[enGBufferNormal].GetRenderTargetTexture();
-		}
-
-		Texture& GetMainRenderTargetSnapshotDrawnOpacity()
-		{
-			return m_mainRTSnapshots[(int)EnMainRTSnapshot::enDrawnOpacity].GetRenderTargetTexture();
-		}
-
 		void SetMainRenderTargetAndDepthStencilBuffer(RenderContext& rc)
 		{
 			rc.SetRenderTarget(m_mainRenderTarget.GetRTVCpuDescriptorHandle(), m_zprepassRenderTarget.GetDSVCpuDescriptorHandle());
@@ -60,18 +40,8 @@ namespace nsK2EngineLow
 		}
 
 	private:
-		enum EnGBuffer
-		{
-			enGBufferAlbedoDepth,           // アルベドと深度値。αに深度値が記憶されています。
-			enGBufferNormal,                // 法線
-			enGBufferMetaricShadowSmooth,   // メタリック、影パラメータ、スムース。
-			// メタリックがr、影パラメータがg、スムースがa。gは未使用。
-			enGBufferNum,                   // G-Bufferの数
-		};
 
 		void ZPrepass(RenderContext& rc);
-
-		void SnapshotMainRenderTarget(RenderContext& rc, EnMainRTSnapshot enSnapshot);
 
 		void ForwardRendering(RenderContext& rc);
 
@@ -83,21 +53,16 @@ namespace nsK2EngineLow
 
 		void InitZPrepassRenderTarget();
 
-		void InitGBuffer();
-
 		void InitMainRenderTarget();
-		
-		void InitMainRTSnapshotRenderTarget();
-
-		void InitCopyMainRenderTargetToFrameBufferSprite();
 
 		void Init2DRenderTarget();
 
+		void InitCopyMainRenderTargetToFrameBufferSprite();
+	
+	private:
 		Sprite m_copyMainRtToFrameBufferSprite;
 		RenderTarget m_zprepassRenderTarget;
 		RenderTarget m_mainRenderTarget;
-		RenderTarget m_mainRTSnapshots[(int)EnMainRTSnapshot::enNum];
-		RenderTarget m_gBuffer[enGBufferNum];
 		SceneGeometryData m_sceneGeometryData;
 		Matrix m_viewProjMatrixForViewCulling;
 		RenderTarget m_2DRenderTarget;

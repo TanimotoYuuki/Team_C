@@ -80,11 +80,10 @@ namespace nsK2EngineLow
 		)
 	{
 		ModelInitData modelInitData;
-		modelInitData.m_fxFilePath = "Assets/shader/zprepass.fx";
 		modelInitData.m_tkmFilePath = tkmFilePath;
-		modelInitData.m_modelUpAxis = modelUpAxis;
+		modelInitData.m_fxFilePath = "Assets/shader/zprepass.fx";
 		modelInitData.m_colorBufferFormat[0] = DXGI_FORMAT_R32G32_FLOAT;
-
+		modelInitData.m_modelUpAxis = modelUpAxis;
 
 		if (m_skeleton.IsInited()) {
 			//スケルトンを指定する。

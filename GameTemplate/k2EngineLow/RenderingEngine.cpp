@@ -15,12 +15,22 @@ namespace nsK2EngineLow
 
 	void RenderingEngine::Init()
 	{
+		InitZPrepassRenderTarget();
 		InitMainRenderTarget();
 		Init2DRenderTarget();
-		InitZPrepassRenderTarget();
-		InitGBuffer();
-		InitMainRTSnapshotRenderTarget();
 		InitCopyMainRenderTargetToFrameBufferSprite();
+	}
+
+	void RenderingEngine::InitZPrepassRenderTarget()
+	{
+		m_zprepassRenderTarget.Create(
+			g_graphicsEngine->GetFrameBufferWidth(),
+			g_graphicsEngine->GetFrameBufferHeight(),
+			1,
+			1,
+			DXGI_FORMAT_R32G32B32A32_FLOAT,
+			DXGI_FORMAT_D32_FLOAT
+		);
 	}
 
 	void RenderingEngine::InitMainRenderTarget()
@@ -83,72 +93,6 @@ namespace nsK2EngineLow
 		m_mainSprite.Init(spriteInitData);
 	}
 
-	void RenderingEngine::InitZPrepassRenderTarget()
-	{
-		m_zprepassRenderTarget.Create(
-			g_graphicsEngine->GetFrameBufferWidth(),
-			g_graphicsEngine->GetFrameBufferHeight(),
-			1,
-			1,
-			DXGI_FORMAT_R32G32B32A32_FLOAT,
-			DXGI_FORMAT_D32_FLOAT
-		);
-	}
-
-	void RenderingEngine::InitGBuffer()
-	{
-		int frameBuffer_w = g_graphicsEngine->GetFrameBufferWidth();
-		int frameBuffer_h = g_graphicsEngine->GetFrameBufferHeight();
-
-		// アルベドカラーを出力用のレンダリングターゲットを初期化する
-		float clearColor[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-		m_gBuffer[enGBufferAlbedoDepth].Create(
-			frameBuffer_w,
-			frameBuffer_h,
-			1,
-			1,
-			DXGI_FORMAT_R32G32B32A32_FLOAT,
-			DXGI_FORMAT_D32_FLOAT,
-			clearColor
-		);
-
-		// 法線出力用のレンダリングターゲットを初期化する
-		m_gBuffer[enGBufferNormal].Create(
-			frameBuffer_w,
-			frameBuffer_h,
-			1,
-			1,
-			DXGI_FORMAT_R8G8B8A8_SNORM,
-			DXGI_FORMAT_UNKNOWN
-		);
-
-
-		// メタリック、影パラメータ、スムース出力用のレンダリングターゲットを初期化する    
-		m_gBuffer[enGBufferMetaricShadowSmooth].Create(
-			frameBuffer_w,
-			frameBuffer_h,
-			1,
-			1,
-			DXGI_FORMAT_R8G8B8A8_UNORM,
-			DXGI_FORMAT_UNKNOWN
-		);
-
-	}
-
-	void RenderingEngine::InitMainRTSnapshotRenderTarget()
-	{
-		for (auto& snapshotRt : m_mainRTSnapshots) {
-			snapshotRt.Create(
-				g_graphicsEngine->GetFrameBufferWidth(),
-				g_graphicsEngine->GetFrameBufferHeight(),
-				1,
-				1,
-				DXGI_FORMAT_R8G8B8A8_UNORM,
-				DXGI_FORMAT_UNKNOWN
-			);
-		}
-	}
-
 	void RenderingEngine::InitCopyMainRenderTargetToFrameBufferSprite()
 	{
 		SpriteInitData spriteInitData;
@@ -193,8 +137,6 @@ namespace nsK2EngineLow
 	{
 		ZPrepass(rc);
 
-		SnapshotMainRenderTarget(rc, EnMainRTSnapshot::enDrawnOpacity);
-
 		ForwardRendering(rc);
 
 		Render2D(rc);
@@ -221,19 +163,6 @@ namespace nsK2EngineLow
 		}
 
 		rc.WaitUntilFinishDrawingToRenderTarget(m_zprepassRenderTarget);
-		EndGPUEvent();
-	}
-
-	void RenderingEngine::SnapshotMainRenderTarget(RenderContext& rc, EnMainRTSnapshot enSnapshot)
-	{
-		BeginGPUEvent("SnapshotMainRenderTarget");
-
-		// メインレンダリングターゲットの内容をスナップショット
-		rc.WaitUntilToPossibleSetRenderTarget(m_mainRTSnapshots[(int)enSnapshot]);
-		rc.SetRenderTargetAndViewport(m_mainRTSnapshots[(int)enSnapshot]);
-		m_copyMainRtToFrameBufferSprite.Draw(rc);
-		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRTSnapshots[(int)enSnapshot]);
-
 		EndGPUEvent();
 	}
 
