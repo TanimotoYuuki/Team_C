@@ -254,6 +254,7 @@
     <ClCompile Include="AI\PathFinding\NaviMesh.cpp" />
     <ClCompile Include="AI\PathFinding\Path.cpp" />
     <ClCompile Include="AI\PathFinding\PathFinding.cpp" />
+    <ClCompile Include="CollisionObject.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="gameObject\Gameobjectmanager.cpp" />
     <ClCompile Include="gameObject\IGameObject.cpp" />
@@ -309,6 +310,7 @@
     <ClCompile Include="level2D\CaslFile.cpp" />
     <ClCompile Include="level2D\Level2D.cpp" />
     <ClCompile Include="level2D\MapChip2D.cpp" />
+    <ClCompile Include="Level3DRender.cpp" />
     <ClCompile Include="level3D\Level.cpp" />
     <ClCompile Include="level3D\MapChip.cpp" />
     <ClCompile Include="level3D\TklFile.cpp" />
@@ -344,6 +346,7 @@
     <ClInclude Include="AI\PathFinding\NaviMesh.h" />
     <ClInclude Include="AI\PathFinding\Path.h" />
     <ClInclude Include="AI\PathFinding\PathFinding.h" />
+    <ClInclude Include="CollisionObject.h" />
     <ClInclude Include="dbg\MyAssert.h" />
     <ClInclude Include="dbg\MyLog.h" />
     <ClInclude Include="FontRender.h" />
@@ -404,6 +407,7 @@
     <ClInclude Include="level2D\CaslFile.h" />
     <ClInclude Include="level2D\Level2D.h" />
     <ClInclude Include="level2D\MapChip2D.h" />
+    <ClInclude Include="Level3DRender.h" />
     <ClInclude Include="level3D\Level.h" />
     <ClInclude Include="level3D\MapChip.h" />
     <ClInclude Include="level3D\TklFile.h" />

@@ -15,6 +15,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="GameText.cpp" />
     <ClCompile Include="GameSprite.cpp" />
+    <ClCompile Include="BackGround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -25,5 +26,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="GameText.h" />
     <ClInclude Include="GameSprite.h" />
+    <ClInclude Include="BackGround.h" />
   </ItemGroup>
 </Project>

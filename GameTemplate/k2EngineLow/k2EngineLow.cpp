@@ -6,6 +6,7 @@ namespace nsK2EngineLow {
 	K2EngineLow* g_engine = nullptr;
 	GameTime* g_gameTime = nullptr;
 	RenderingEngine* g_renderingEngine = nullptr;
+	CollisionObjectManager* g_collisionObjectManager = nullptr;
 
 	K2EngineLow::~K2EngineLow()
 	{
@@ -13,6 +14,7 @@ namespace nsK2EngineLow {
 		g_graphicsEngine = nullptr;
 		g_gameTime = nullptr;
 		g_renderingEngine = nullptr;
+		g_collisionObjectManager = nullptr;
 		
 		delete m_graphicsEngine;
 		
@@ -46,6 +48,7 @@ namespace nsK2EngineLow {
 
 		g_renderingEngine = new RenderingEngine;
 		g_renderingEngine->Init();
+		g_collisionObjectManager = new CollisionObjectManager;
 
 #ifdef K2_DEBUG
 		if (m_graphicsEngine) {

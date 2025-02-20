@@ -12,6 +12,7 @@ bool Player::Start()
 
 	m_modelRender.Init("Assets/modelData/unityChan.tkm", m_animationClips, enAnimationClips_Num, enModelUpAxisY);
 	m_modelRender.SetPosition(m_position);
+	m_charaCon.Init(25.0f, 75.0f, m_position);
 	m_modelRender.Update();
 	return true;
 }
@@ -30,22 +31,25 @@ void Player::Update()
 
 void Player::Move()
 {
-	if (g_pad[0]->IsPress(enButtonUp))
-	{
-		m_position.z += 1.0f;
-	}
-	else if (g_pad[0]->IsPress(enButtonDown))
-	{
-		m_position.z -= 1.0f;
-	}
-	else if (g_pad[0]->IsPress(enButtonLeft))
-	{
-		m_position.x -= 1.0f;
-	}
-	else if (g_pad[0]->IsPress(enButtonRight))
-	{
-		m_position.x += 1.0f;
-	}
+	m_moveSpeed.x = 0.0f;
+	m_moveSpeed.z = 0.0f;
+
+	Vector3 stickL;
+	stickL.x = g_pad[0]->GetLStickXF();
+	stickL.y = g_pad[0]->GetLStickYF();
+
+	Vector3 forward = g_camera3D->GetForward();
+	Vector3 right = g_camera3D->GetRight();
+
+	forward.y = 0.0f;
+	right.y = 0.0f;
+
+	right *= stickL.x * 120.0f;
+	forward *= stickL.y * 120.0f;
+
+	m_moveSpeed += right + forward;
+
+	m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
 }
 
 void Player::AnimationManager()

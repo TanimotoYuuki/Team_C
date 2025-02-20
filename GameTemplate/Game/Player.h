@@ -24,8 +24,10 @@ public:
 	};
 	AnimationClip m_animationClips[enAnimationClips_Num];
 	ModelRender m_modelRender;
+	CharacterController m_charaCon;
 
 	Vector3 m_position = Vector3::Zero;
+	Vector3 m_moveSpeed = Vector3::Zero;
 	int m_animationState = enAnimationState_Idle;
 };
 

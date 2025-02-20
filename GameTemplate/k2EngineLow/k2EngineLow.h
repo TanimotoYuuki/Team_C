@@ -10,6 +10,7 @@
 
 namespace nsK2EngineLow {
 	class RenderingEngine;
+	class CollisionObjectManager;
 	class GraphicsEngine;
 	class GameTime;
 	class Texture;
@@ -223,5 +224,6 @@ namespace nsK2EngineLow {
 	extern K2EngineLow* g_engine;	// 低レベルK2エンジン。
 	extern GameTime* g_gameTime;
 	extern RenderingEngine* g_renderingEngine;
+	extern CollisionObjectManager* g_collisionObjectManager;
 }
 

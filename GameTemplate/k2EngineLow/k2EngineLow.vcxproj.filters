@@ -233,6 +233,8 @@
     <ClCompile Include="IRenderer.cpp" />
     <ClCompile Include="GeometryData.cpp" />
     <ClCompile Include="SceneGeometryData.cpp" />
+    <ClCompile Include="CollisionObject.cpp" />
+    <ClCompile Include="Level3DRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="k2EngineLowPreCompile.h" />
@@ -516,6 +518,8 @@
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="GeometryData.h" />
     <ClInclude Include="SceneGeometryData.h" />
+    <ClInclude Include="CollisionObject.h" />
+    <ClInclude Include="Level3DRender.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="graphics">

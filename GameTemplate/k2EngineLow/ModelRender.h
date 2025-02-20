@@ -126,6 +126,21 @@ namespace nsK2EngineLow
 		}
 
 		/// <summary>
+		/// ボーンの名前からボーン番号を検索
+		/// </summary>
+		/// <param name="boneName">ボーンの名前</param>
+		/// <returns>ボーン番号。見つからなかった場合は-1が返ってきます</returns>
+		int FindBoneID(const wchar_t* boneName) const
+		{
+			return m_skeleton.FindBoneID(boneName);
+		}
+
+		Bone* GetBone(int boneNo) const
+		{
+			return m_skeleton.GetBone(boneNo);
+		}
+
+		/// <summary>
 		/// ワールド行列を取得 
 		/// </summary>
 		const Matrix& GetWorldMatrix(int instanceId) const

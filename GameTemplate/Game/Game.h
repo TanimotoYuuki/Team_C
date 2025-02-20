@@ -2,6 +2,7 @@
 class Player;
 class GameText;
 class GameSprite;
+class BackGround;
 class Game : public IGameObject
 {
 public:
@@ -19,5 +20,6 @@ private:
 	Player* m_player = nullptr;
 	GameText* m_gameText = nullptr;
 	GameSprite* m_gameSprite = nullptr;
+	BackGround* m_backGround = nullptr;
 };
 
