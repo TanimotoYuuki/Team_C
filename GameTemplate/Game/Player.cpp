@@ -21,12 +21,13 @@ void Player::Update()
 {
 	Move();
 
+	Rotation();
+
 	AnimationManager();
 
 	PlayAnimation();
 
 	m_modelRender.Update();
-	m_modelRender.SetPosition(m_position);
 }
 
 void Player::Move()
@@ -50,6 +51,16 @@ void Player::Move()
 	m_moveSpeed += right + forward;
 
 	m_position = m_charaCon.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+	m_modelRender.SetPosition(m_position);
+}
+
+void Player::Rotation()
+{
+	if (fabsf(m_moveSpeed.x) >= 0.001f || fabsf(m_moveSpeed.z) >= 0.001f)
+	{
+		m_rotation.SetRotationYFromDirectionXZ(m_moveSpeed);
+		m_modelRender.SetRotation(m_rotation);
+	}
 }
 
 void Player::AnimationManager()

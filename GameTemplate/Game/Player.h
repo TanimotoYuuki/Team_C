@@ -5,6 +5,7 @@ public:
 	bool Start();
 	void Update();
 	void Move();
+	void Rotation();
 	void AnimationManager();
 	void PlayAnimation();
 	void Render(RenderContext& rc);
@@ -28,6 +29,7 @@ public:
 
 	Vector3 m_position = Vector3::Zero;
 	Vector3 m_moveSpeed = Vector3::Zero;
+	Quaternion m_rotation = Quaternion::Identity;
 	int m_animationState = enAnimationState_Idle;
 };
 
