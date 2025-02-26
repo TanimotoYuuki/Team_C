@@ -19,6 +19,8 @@ namespace nsK2EngineLow
 		InitMainRenderTarget();
 		Init2DRenderTarget();
 		InitCopyMainRenderTargetToFrameBufferSprite();
+
+		m_sceneLight.Init();
 	}
 
 	void RenderingEngine::InitZPrepassRenderTarget()

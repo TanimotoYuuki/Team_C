@@ -235,6 +235,7 @@
     <ClCompile Include="SceneGeometryData.cpp" />
     <ClCompile Include="CollisionObject.cpp" />
     <ClCompile Include="Level3DRender.cpp" />
+    <ClCompile Include="SceneLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="k2EngineLowPreCompile.h" />
@@ -520,6 +521,7 @@
     <ClInclude Include="SceneGeometryData.h" />
     <ClInclude Include="CollisionObject.h" />
     <ClInclude Include="Level3DRender.h" />
+    <ClInclude Include="SceneLight.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="graphics">

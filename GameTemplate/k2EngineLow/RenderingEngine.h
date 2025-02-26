@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneGeometryData.h"
+#include "SceneLight.h"
 
 namespace nsK2EngineLow
 {
@@ -34,6 +35,11 @@ namespace nsK2EngineLow
 
 		void Execute(RenderContext& rc);
 
+		Light& GetLight()
+		{
+			return m_sceneLight.GetLight();
+		}
+
 		const Matrix& GetViewProjectionMatrixForViewCulling() const
 		{
 			return m_viewProjMatrixForViewCulling;
@@ -60,6 +66,7 @@ namespace nsK2EngineLow
 		void InitCopyMainRenderTargetToFrameBufferSprite();
 	
 	private:
+		SceneLight m_sceneLight;
 		Sprite m_copyMainRtToFrameBufferSprite;
 		RenderTarget m_zprepassRenderTarget;
 		RenderTarget m_mainRenderTarget;

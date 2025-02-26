@@ -68,6 +68,10 @@ namespace nsK2EngineLow
 		//モデルの上方向を指定する。
 		initData.m_modelUpAxis = enModelUpAxis;
 
+		//ライトの情報を定数バッファへ渡す
+		initData.m_expandConstantBuffer = &g_renderingEngine->GetLight();
+		initData.m_expandConstantBufferSize = sizeof(g_renderingEngine->GetLight());
+
 		//作成した初期化データをもとにモデルを初期化する
 		m_model.Init(initData);
 
